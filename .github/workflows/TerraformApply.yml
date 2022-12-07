@@ -1,8 +1,8 @@
 name: TerraformApply
 
 on:
-  push:
-    branches: [ "main" ]
+  # push:
+  #   branches: [ "main" ]
 
   workflow_dispatch:
 
@@ -14,3 +14,10 @@ jobs:
 
       - name: Verify Terraform version
         run: terraform --version
+      
+      - name: Terraform init
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+        run: echo $AWS_DEFAULT_REGION $$ terraform init -input=false
